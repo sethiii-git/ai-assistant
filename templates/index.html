@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<form action="/" method="post" class="ai-form">
+    <div class="form-group">
+        <label for="function-select">1. Choose a Function:</label>
+        <select name="function_select" id="function-select" class="form-control">
+            <option value="question" {% if selected_function == 'question' %}selected{% endif %}>❓ Answer a Question</option>
+            <option value="summarize" {% if selected_function == 'summarize' %}selected{% endif %}>📚 Summarize Text</option>
+            <option value="creative" {% if selected_function == 'creative' %}selected{% endif %}>🎨 Generate Creative Content</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="prompt-select">2. Select a Prompt Style:</label>
+        <select name="prompt_select" id="prompt-select" class="form-control">
+            </select>
+    </div>
+
+    <div class="form-group">
+        <label for="user_input">3. Enter Your Text or Question:</label>
+        <textarea name="user_input" id="user_input" rows="8" class="form-control" placeholder="Enter your text here...">{{ user_input }}</textarea>
+    </div>
+
+    <button type="submit" class="btn-submit">Generate Response</button>
+</form>
+
+{% if ai_response %}
+<div class="response-container">
+    <h2>✨ AI Response</h2>
+    <div class="response-text">
+        <p>{{ ai_response | safe }}</p>
+    </div>
+    <div class="feedback-section" id="feedback-section">
+        <p>Was this response helpful? [cite: 27]</p>
+        <button class="btn-feedback" onclick="giveFeedback('yes')">👍 Yes</button>
+        <button class="btn-feedback" onclick="giveFeedback('no')">👎 No</button>
+    </div>
+    <div id="feedback-thanks" style="display:none;">
+        <p>Thank you for your feedback!</p>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const allPrompts = {{ prompts_json | tojson }};
+    const functionSelect = document.getElementById('function-select');
+    const promptSelect = document.getElementById('prompt-select');
+    const currentFunction = '{{ selected_function }}';
+    const currentPrompt = '{{ selected_prompt }}';
+
+    function updatePromptOptions() {
+        const selectedFunction = functionSelect.value;
+        const promptsForFunction = allPrompts[selectedFunction];
+        
+        promptSelect.innerHTML = ''; // Clear existing options
+        
+        for (const promptName in promptsForFunction) {
+            const option = document.createElement('option');
+            option.value = promptName;
+            option.textContent = promptName;
+            if (promptName === currentPrompt) {
+                option.selected = true;
+            }
+            promptSelect.appendChild(option);
+        }
+    }
+
+    // Call on page load and when function selection changes
+    document.addEventListener('DOMContentLoaded', updatePromptOptions);
+    functionSelect.addEventListener('change', updatePromptOptions);
+
+    function giveFeedback(wasHelpful) {
+        const feedbackData = {
+            function: '{{ selected_function }}',
+            prompt: '{{ selected_prompt }}',
+            userInput: `{{ user_input | e }}`,
+            response: `{{ ai_response | e }}`,
+            helpful: wasHelpful
+        };
+
+        fetch('/feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(feedbackData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status === 'success'){
+                document.getElementById('feedback-section').style.display = 'none';
+                document.getElementById('feedback-thanks').style.display = 'block';
+            }
+        });
+    }
+</script>
+{% endblock %}
