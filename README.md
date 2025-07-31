@@ -1,6 +1,6 @@
 # AI Assistant Web Application
 
-This project is a web-based AI Assistant built with Flask and Python, as specified in the "Major Project for Prompt Engineering" document. It allows users to perform tasks like answering questions, summarizing text, and generating creative content by interacting with an AI model.
+This project is a web-based AI Assistant built with Flask and Python, as a Major Project for AI & Prompt Engineering Internship. It allows users to perform tasks like answering questions, summarizing text, and generating creative content by interacting with an AI model.
 
 ## Features
 
