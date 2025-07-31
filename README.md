@@ -1,13 +1,13 @@
 # AI Assistant Web Application
 
-[cite_start]This project is a web-based AI Assistant built with Flask and Python, as specified in the "Major Project for Prompt Engineering" document[cite: 1]. [cite_start]It allows users to perform tasks like answering questions, summarizing text, and generating creative content by interacting with an AI model.
+This project is a web-based AI Assistant built with Flask and Python, as specified in the "Major Project for Prompt Engineering" document. It allows users to perform tasks like answering questions, summarizing text, and generating creative content by interacting with an AI model.
 
 ## Features
 
-* [cite_start]**Three Core Functions**: Question Answering, Text Summarization, and Creative Content Generation[cite: 9, 10, 11].
-* [cite_start]**Dynamic Prompt Selection**: For each function, users can choose from three different prompt styles (e.g., Simple, Detailed, ELI5).
-* [cite_start]**Web Interface**: A clean, user-friendly interface built with Flask and HTML[cite: 21].
-* [cite_start]**Feedback System**: Users can provide feedback on AI responses, which is logged for analysis[cite: 26, 93].
+* **Three Core Functions**: Question Answering, Text Summarization, and Creative Content Generation.
+* **Dynamic Prompt Selection**: For each function, users can choose from three different prompt styles (e.g., Simple, Detailed, ELI5).
+* **Web Interface**: A clean, user-friendly interface built with Flask and HTML.
+* **Feedback System**: Users can provide feedback on AI responses, which is logged for analysis.
 
 ## Setup and Installation
 
@@ -31,7 +31,7 @@ You need an API key from OpenAI to run this project.
 
 ### 4. Install Dependencies
 
-[cite_start]Navigate to the project directory in your terminal and install the required Python packages[cite: 36].
+Navigate to the project directory in your terminal and install the required Python packages.
 
 ```bash
 pip install -r requirements.txt
